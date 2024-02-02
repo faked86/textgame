@@ -2,6 +2,8 @@ package game
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 
 	"text_game/pkg/game/inventory"
 	"text_game/pkg/game/location"
@@ -57,8 +59,31 @@ func (g *Game) findWays() []int {
 	return res
 }
 
-func (g *Game) WaysMessage() {
+func (g *Game) waysMessage() string {
+	ways := g.findWays()
 
+	if len(ways) == 0 {
+		return ""
+	}
+
+	var sb strings.Builder
+	curLocTag := g.Locations[g.playerLocation].Tag()
+
+	for _, wayNum := range ways {
+		wayTag := g.Locations[wayNum].Tag()
+
+		if curLocTag != wayTag {
+			sb.WriteString(fmt.Sprintf("%s, ", wayTag))
+		} else {
+			sb.WriteString(fmt.Sprintf("%s, ", g.Locations[wayNum].Name()))
+		}
+	}
+	res := sb.String()
+	if len(res) > 0 {
+		res = res[:len(res)-2] // Remove the last ", " from the string
+	}
+
+	return "можно пройти - " + res
 }
 
 func (g *Game) LookAround() {

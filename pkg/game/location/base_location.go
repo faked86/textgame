@@ -10,7 +10,7 @@ import (
 )
 
 type BaseLocation struct {
-	Name                string
+	name                string
 	Loot                inventory.Inventory
 	enterText           string
 	lookAroundTextEmpty string
@@ -20,13 +20,17 @@ type BaseLocation struct {
 
 func NewBaseLocation(name, enterTxt, lkArndTxtEmpty, lkArndTxtLoot string, loot inventory.Inventory, tag tags.Tag) *BaseLocation {
 	return &BaseLocation{
-		Name:                name,
+		name:                name,
 		Loot:                loot,
 		enterText:           enterTxt,
 		lookAroundTextEmpty: lkArndTxtEmpty,
 		lookAroundTextLoot:  lkArndTxtLoot,
 		tag:                 tag,
 	}
+}
+
+func (l *BaseLocation) Name() string {
+	return l.name
 }
 
 func (l *BaseLocation) LookAround() string {

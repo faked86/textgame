@@ -6,6 +6,7 @@ import (
 )
 
 type Location interface {
+	Name() string
 	LookAround() string
 	Enter() string
 	TakeItem(itemName string) (item.Item, error)
