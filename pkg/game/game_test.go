@@ -19,15 +19,15 @@ func TestFindWaysNoWay(t *testing.T) {
 	)
 	game := NewGame(kitchen, &inventory.Inventory{})
 
-	get := len(game.findWays())
+	got := len(game.findWays())
 	want := 0
-	if get != want {
+	if got != want {
 		t.Error("Want empty list, get list with objects")
 	}
 }
 
 func TestFindWaysOneWay(t *testing.T) {
-	kitchen := location.NewBaseLocation(
+	var kitchen location.Location = location.NewBaseLocation(
 		"кухня",
 		"кухня, ничего интересного",
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
@@ -35,7 +35,7 @@ func TestFindWaysOneWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	lobby := location.NewBaseLocation(
+	var lobby location.Location = location.NewBaseLocation(
 		"коридор",
 		"ничего интересного",
 		"ничего интересного",
@@ -47,14 +47,15 @@ func TestFindWaysOneWay(t *testing.T) {
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)
 
-	get := game.findWays()
+	got := game.findWays()
 	wantLen := 1
+	wantElem := 1
 
-	if len(get) != wantLen {
-		t.Errorf("Want slice with 1 obj, get %d objects", len(get))
+	if len(got) != wantLen {
+		t.Errorf("Want slice with 1 obj, get %d objects", len(got))
 	}
 
-	if &get[len(get)-1] == lobby {
+	if got[len(got)-1] != wantElem {
 		t.Error("Get wrong object")
 	}
 }
