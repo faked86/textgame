@@ -217,3 +217,161 @@ func TestWaysMessageDifferentTag2(t *testing.T) {
 		t.Errorf("Want: %s Got: %s", want, got)
 	}
 }
+func TestLookAroundNoWay(t *testing.T) {
+	kitchen := location.NewBaseLocation(
+		"кухня",
+		"кухня, ничего интересного",
+		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	game := NewGame(kitchen, &inventory.Inventory{})
+
+	got := game.LookAround()
+	want := "ты находишься на кухне, надо собрать рюкзак и идти в универ."
+	if got != want {
+		t.Errorf("Want: %s Got: %s", want, got)
+	}
+}
+
+func TestLookAroundOneWay(t *testing.T) {
+	var kitchen location.Location = location.NewBaseLocation(
+		"кухня",
+		"кухня, ничего интересного",
+		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var lobby location.Location = location.NewBaseLocation(
+		"коридор",
+		"ничего интересного",
+		"ничего интересного",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	game := NewGame(kitchen, &inventory.Inventory{})
+	game.AddLocation(lobby)
+	game.AddWay(0, 1)
+
+	got := game.LookAround()
+	want := "ты находишься на кухне, надо собрать рюкзак и идти в универ. можно пройти - коридор"
+
+	if got != want {
+		t.Errorf("Want: %s Got: %s", want, got)
+	}
+}
+
+func TestLookAroundMultipleWays(t *testing.T) {
+	var kitchen location.Location = location.NewBaseLocation(
+		"кухня",
+		"кухня, ничего интересного",
+		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var lobby location.Location = location.NewBaseLocation(
+		"коридор",
+		"ничего интересного",
+		"ничего интересного",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var room location.Location = location.NewBaseLocation(
+		"комната",
+		"ты в своей комнате",
+		"пустая комната",
+		"на столе",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	game := NewGame(lobby, &inventory.Inventory{})
+
+	game.AddLocation(kitchen)
+	game.AddWay(0, 1)
+
+	game.AddLocation(room)
+	game.AddWay(0, 2)
+
+	got := game.LookAround()
+	want := "ничего интересного. можно пройти - кухня, комната"
+
+	if got != want {
+		t.Errorf("Want: %s Got: %s", want, got)
+	}
+}
+
+func TestLookAroundDifferentTag1(t *testing.T) {
+	var kitchen location.Location = location.NewBaseLocation(
+		"кухня",
+		"кухня, ничего интересного",
+		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var lobby location.Location = location.NewBaseLocation(
+		"коридор",
+		"ничего интересного",
+		"ничего интересного",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var room location.Location = location.NewBaseLocation(
+		"комната",
+		"ты в своей комнате",
+		"пустая комната",
+		"на столе",
+		inventory.Inventory{},
+		tags.Outside,
+	)
+	game := NewGame(lobby, &inventory.Inventory{})
+
+	game.AddLocation(kitchen)
+	game.AddWay(0, 1)
+
+	game.AddLocation(room)
+	game.AddWay(0, 2)
+
+	got := game.LookAround()
+	want := "ничего интересного. можно пройти - кухня, улица"
+
+	if got != want {
+		t.Errorf("Want: %s Got: %s", want, got)
+	}
+}
+
+func TestLookAroundDifferentTag2(t *testing.T) {
+	var lobby location.Location = location.NewBaseLocation(
+		"коридор",
+		"ничего интересного",
+		"ничего интересного",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Home,
+	)
+	var outside location.Location = location.NewBaseLocation(
+		"улица",
+		"на улице весна",
+		"на улице весна",
+		"здесь есть",
+		inventory.Inventory{},
+		tags.Outside,
+	)
+	game := NewGame(outside, &inventory.Inventory{})
+
+	game.AddLocation(lobby)
+	game.AddWay(0, 1)
+
+	got := game.LookAround()
+	want := "на улице весна. можно пройти - домой"
+
+	if got != want {
+		t.Errorf("Want: %s Got: %s", want, got)
+	}
+}

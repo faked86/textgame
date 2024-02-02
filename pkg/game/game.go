@@ -86,6 +86,12 @@ func (g *Game) waysMessage() string {
 	return "можно пройти - " + res
 }
 
-func (g *Game) LookAround() {
+func (g *Game) LookAround() string {
+	curLocMessage := g.Locations[g.playerLocation].LookAround()
+	waysMessage := g.waysMessage()
 
+	if waysMessage == "" {
+		return curLocMessage
+	}
+	return curLocMessage + " " + waysMessage
 }
