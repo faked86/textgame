@@ -3,31 +3,40 @@ package location
 import (
 	"errors"
 	"fmt"
+
 	"text_game/pkg/game/inventory"
 	"text_game/pkg/game/item"
+	"text_game/pkg/game/location/tags"
 )
 
-type Location struct {
+type Location interface {
+	LookAround() string
+	Enter() string
+	TakeItem(itemName string) (*item.BaseItem, error)
+	Tag() string
+}
+
+type BaseLocation struct {
 	Name                string
 	Loot                inventory.Inventory
 	enterText           string
 	lookAroundTextEmpty string
 	lookAroundTextLoot  string
-	Tag                 Tag
+	tag                 tags.Tag
 }
 
-func NewLocation(name, enterTxt, lkArndTxtEmpty, lkArndTxtLoot string, loot inventory.Inventory, tag Tag) *Location {
-	return &Location{
+func NewLocation(name, enterTxt, lkArndTxtEmpty, lkArndTxtLoot string, loot inventory.Inventory, tag tags.Tag) *BaseLocation {
+	return &BaseLocation{
 		Name:                name,
 		Loot:                loot,
 		enterText:           enterTxt,
 		lookAroundTextEmpty: lkArndTxtEmpty,
 		lookAroundTextLoot:  lkArndTxtLoot,
-		Tag:                 tag,
+		tag:                 tag,
 	}
 }
 
-func (l *Location) LookAround() string {
+func (l *BaseLocation) LookAround() string {
 	if len(l.Loot) == 0 {
 		return fmt.Sprintf("%s.", l.lookAroundTextEmpty)
 	}
@@ -35,11 +44,11 @@ func (l *Location) LookAround() string {
 	return fmt.Sprintf("%s: %s.", l.lookAroundTextLoot, &l.Loot)
 }
 
-func (l *Location) Enter() string {
+func (l *BaseLocation) Enter() string {
 	return l.enterText + "."
 }
 
-func (l *Location) TakeItem(itemName string) (*item.BaseItem, error) {
+func (l *BaseLocation) TakeItem(itemName string) (*item.BaseItem, error) {
 	for i, item := range l.Loot {
 		if item.Name() == itemName {
 			l.Loot = append(l.Loot[:i], l.Loot[i+1:]...)
@@ -47,4 +56,8 @@ func (l *Location) TakeItem(itemName string) (*item.BaseItem, error) {
 		}
 	}
 	return nil, errors.New("no such item in this location")
+}
+
+func (l *BaseLocation) Tag() tags.Tag {
+	return l.tag
 }

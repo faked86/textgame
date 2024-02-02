@@ -1,4 +1,4 @@
-package location
+package tags
 
 type Tag string
 

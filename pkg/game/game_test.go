@@ -5,6 +5,7 @@ import (
 
 	"text_game/pkg/game/inventory"
 	"text_game/pkg/game/location"
+	"text_game/pkg/game/location/tags"
 )
 
 func TestFindWaysNoWay(t *testing.T) {
@@ -14,7 +15,7 @@ func TestFindWaysNoWay(t *testing.T) {
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
 		"здесь есть",
 		inventory.Inventory{},
-		location.Home,
+		tags.Home,
 	)
 	game := NewGame(kitchen, &inventory.Inventory{})
 
@@ -32,7 +33,7 @@ func TestFindWaysOneWay(t *testing.T) {
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
 		"здесь есть",
 		inventory.Inventory{},
-		location.Home,
+		tags.Home,
 	)
 	lobby := location.NewLocation(
 		"коридор",
@@ -40,7 +41,7 @@ func TestFindWaysOneWay(t *testing.T) {
 		"ничего интересного",
 		"здесь есть",
 		inventory.Inventory{},
-		location.Home,
+		tags.Home,
 	)
 	game := NewGame(kitchen, &inventory.Inventory{})
 	game.AddLocation(lobby)

@@ -9,22 +9,22 @@ import (
 
 type Game struct {
 	WorldMap        [][]bool
-	Locations       []location.Location
+	Locations       []location.BaseLocation
 	playerInventory *inventory.Inventory
 	playerLocation  int
 }
 
-func NewGame(start *location.Location, invent *inventory.Inventory) *Game {
+func NewGame(start *location.BaseLocation, invent *inventory.Inventory) *Game {
 	w := &Game{
 		WorldMap:        [][]bool{{false}},
-		Locations:       []location.Location{*start},
+		Locations:       []location.BaseLocation{*start},
 		playerInventory: invent,
 		playerLocation:  0,
 	}
 	return w
 }
 
-func (g *Game) AddLocation(l *location.Location) {
+func (g *Game) AddLocation(l *location.BaseLocation) {
 	g.Locations = append(g.Locations, *l)
 	locNum := len(g.WorldMap)
 	newRow := make([]bool, locNum+1)
@@ -47,8 +47,8 @@ func (g *Game) AddWay(l1, l2 int) error {
 	return nil
 }
 
-func (g *Game) findWays() []location.Location {
-	res := make([]location.Location, 0)
+func (g *Game) findWays() []location.BaseLocation {
+	res := make([]location.BaseLocation, 0)
 	for i, way := range g.WorldMap[g.playerLocation] {
 		if way {
 			res = append(res, g.Locations[i])

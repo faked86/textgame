@@ -5,10 +5,11 @@ import (
 
 	"text_game/pkg/game/inventory"
 	"text_game/pkg/game/item"
+	"text_game/pkg/game/location/tags"
 )
 
 type locationCase struct {
-	loc  Location
+	loc  BaseLocation
 	want string
 }
 
@@ -19,7 +20,7 @@ func TestLookAround(t *testing.T) {
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
 		"здесь есть",
 		inventory.Inventory{},
-		Home,
+		tags.Home,
 	)
 
 	var room1 = NewLocation(
@@ -32,7 +33,7 @@ func TestLookAround(t *testing.T) {
 			item.NewBaseItem("конспекты"),
 			item.NewBaseItem("рюкзак"),
 		},
-		Home,
+		tags.Home,
 	)
 
 	var room2 = NewLocation(
@@ -41,7 +42,7 @@ func TestLookAround(t *testing.T) {
 		"пустая комната",
 		"на столе",
 		inventory.Inventory{},
-		Home,
+		tags.Home,
 	)
 
 	var lookAroundCases = []locationCase{
@@ -74,7 +75,7 @@ func TestEnter(t *testing.T) {
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
 		"здесь есть",
 		inventory.Inventory{},
-		Home,
+		tags.Home,
 	)
 
 	var room = NewLocation(
@@ -87,7 +88,7 @@ func TestEnter(t *testing.T) {
 			item.NewBaseItem("конспекты"),
 			item.NewBaseItem("рюкзак"),
 		},
-		Home,
+		tags.Home,
 	)
 
 	var lobby = NewLocation(
@@ -96,7 +97,7 @@ func TestEnter(t *testing.T) {
 		"ничего интересного",
 		"здесь есть",
 		inventory.Inventory{},
-		Home,
+		tags.Home,
 	)
 
 	var outside = NewLocation(
@@ -105,7 +106,7 @@ func TestEnter(t *testing.T) {
 		"ничего интересного",
 		"здесь есть",
 		inventory.Inventory{},
-		Outside,
+		tags.Outside,
 	)
 
 	var enterCases = []locationCase{
@@ -150,7 +151,7 @@ func TestTakeItemWrong(t *testing.T) {
 			notes,
 			backpack,
 		},
-		Home,
+		tags.Home,
 	)
 
 	item, err := room.TakeItem("телефон")
@@ -183,7 +184,7 @@ func TestTakeItemRight(t *testing.T) {
 			notes,
 			backpack,
 		},
-		Home,
+		tags.Home,
 	)
 
 	item, err := room.TakeItem("ключи")
