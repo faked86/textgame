@@ -39,9 +39,9 @@ func (l *Location) Enter() string {
 	return l.enterText + "."
 }
 
-func (l *Location) TakeItem(itemName string) (*item.Item, error) {
+func (l *Location) TakeItem(itemName string) (*item.BaseItem, error) {
 	for i, item := range l.Loot {
-		if item.Name == itemName {
+		if item.Name() == itemName {
 			l.Loot = append(l.Loot[:i], l.Loot[i+1:]...)
 			return item, nil
 		}

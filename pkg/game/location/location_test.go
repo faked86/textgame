@@ -28,9 +28,9 @@ func TestLookAround(t *testing.T) {
 		"пустая комната",
 		"на столе",
 		inventory.Inventory{
-			&item.Item{Name: "ключи"},
-			&item.Item{Name: "конспекты"},
-			&item.Item{Name: "рюкзак"},
+			item.NewBaseItem("ключи"),
+			item.NewBaseItem("конспекты"),
+			item.NewBaseItem("рюкзак"),
 		},
 		Home,
 	)
@@ -83,9 +83,9 @@ func TestEnter(t *testing.T) {
 		"пустая комната",
 		"на столе",
 		inventory.Inventory{
-			&item.Item{Name: "ключи"},
-			&item.Item{Name: "конспекты"},
-			&item.Item{Name: "рюкзак"},
+			item.NewBaseItem("ключи"),
+			item.NewBaseItem("конспекты"),
+			item.NewBaseItem("рюкзак"),
 		},
 		Home,
 	)
@@ -136,9 +136,9 @@ func TestEnter(t *testing.T) {
 }
 
 func TestTakeItemWrong(t *testing.T) {
-	keys := item.Item{Name: "ключи"}
-	notes := item.Item{Name: "конспекты"}
-	backpack := item.Item{Name: "рюкзак"}
+	keys := item.NewBaseItem("ключи")
+	notes := item.NewBaseItem("конспекты")
+	backpack := item.NewBaseItem("рюкзак")
 
 	room := NewLocation(
 		"комната",
@@ -146,9 +146,9 @@ func TestTakeItemWrong(t *testing.T) {
 		"пустая комната",
 		"на столе",
 		inventory.Inventory{
-			&keys,
-			&notes,
-			&backpack,
+			keys,
+			notes,
+			backpack,
 		},
 		Home,
 	)
@@ -169,9 +169,9 @@ func TestTakeItemWrong(t *testing.T) {
 }
 
 func TestTakeItemRight(t *testing.T) {
-	keys := item.Item{Name: "ключи"}
-	notes := item.Item{Name: "конспекты"}
-	backpack := item.Item{Name: "рюкзак"}
+	keys := item.NewBaseItem("ключи")
+	notes := item.NewBaseItem("конспекты")
+	backpack := item.NewBaseItem("рюкзак")
 
 	room := NewLocation(
 		"комната",
@@ -179,9 +179,9 @@ func TestTakeItemRight(t *testing.T) {
 		"пустая комната",
 		"на столе",
 		inventory.Inventory{
-			&keys,
-			&notes,
-			&backpack,
+			keys,
+			notes,
+			backpack,
 		},
 		Home,
 	)
@@ -196,7 +196,7 @@ func TestTakeItemRight(t *testing.T) {
 		t.Error("want item got nil")
 	}
 
-	if item != &keys {
+	if item != keys {
 		t.Errorf("want: %p, get: %p", item, &keys)
 	}
 

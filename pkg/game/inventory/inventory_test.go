@@ -17,11 +17,11 @@ var stringCases = []stringCase{
 		want: "",
 	},
 	{
-		inv:  Inventory{&item.Item{Name: "рюкзак"}},
+		inv:  Inventory{item.NewBaseItem("рюкзак")},
 		want: "рюкзак",
 	},
 	{
-		inv:  Inventory{&item.Item{Name: "рюкзак"}, &item.Item{Name: "конспекты"}},
+		inv:  Inventory{item.NewBaseItem("рюкзак"), item.NewBaseItem("конспекты")},
 		want: "рюкзак, конспекты",
 	},
 }
