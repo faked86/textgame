@@ -14,7 +14,7 @@ type locationCase struct {
 }
 
 func TestLookAround(t *testing.T) {
-	var kitchen = NewLocation(
+	var kitchen = NewBaseLocation(
 		"кухня",
 		"кухня, ничего интересного",
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
@@ -23,7 +23,7 @@ func TestLookAround(t *testing.T) {
 		tags.Home,
 	)
 
-	var room1 = NewLocation(
+	var room1 = NewBaseLocation(
 		"комната",
 		"ты в своей комнате",
 		"пустая комната",
@@ -36,7 +36,7 @@ func TestLookAround(t *testing.T) {
 		tags.Home,
 	)
 
-	var room2 = NewLocation(
+	var room2 = NewBaseLocation(
 		"комната",
 		"ты в своей комнате",
 		"пустая комната",
@@ -69,7 +69,7 @@ func TestLookAround(t *testing.T) {
 }
 
 func TestEnter(t *testing.T) {
-	var kitchen = NewLocation(
+	var kitchen = NewBaseLocation(
 		"кухня",
 		"кухня, ничего интересного",
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
@@ -78,7 +78,7 @@ func TestEnter(t *testing.T) {
 		tags.Home,
 	)
 
-	var room = NewLocation(
+	var room = NewBaseLocation(
 		"комната",
 		"ты в своей комнате",
 		"пустая комната",
@@ -91,7 +91,7 @@ func TestEnter(t *testing.T) {
 		tags.Home,
 	)
 
-	var lobby = NewLocation(
+	var lobby = NewBaseLocation(
 		"коридор",
 		"ничего интересного",
 		"ничего интересного",
@@ -100,7 +100,7 @@ func TestEnter(t *testing.T) {
 		tags.Home,
 	)
 
-	var outside = NewLocation(
+	var outside = NewBaseLocation(
 		"улица",
 		"на улице весна",
 		"ничего интересного",
@@ -141,7 +141,7 @@ func TestTakeItemWrong(t *testing.T) {
 	notes := item.NewBaseItem("конспекты")
 	backpack := item.NewBaseItem("рюкзак")
 
-	room := NewLocation(
+	room := NewBaseLocation(
 		"комната",
 		"ты в своей комнате",
 		"пустая комната",
@@ -174,7 +174,7 @@ func TestTakeItemRight(t *testing.T) {
 	notes := item.NewBaseItem("конспекты")
 	backpack := item.NewBaseItem("рюкзак")
 
-	room := NewLocation(
+	room := NewBaseLocation(
 		"комната",
 		"ты в своей комнате",
 		"пустая комната",

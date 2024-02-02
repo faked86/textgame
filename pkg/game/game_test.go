@@ -9,7 +9,7 @@ import (
 )
 
 func TestFindWaysNoWay(t *testing.T) {
-	kitchen := location.NewLocation(
+	kitchen := location.NewBaseLocation(
 		"кухня",
 		"кухня, ничего интересного",
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
@@ -27,7 +27,7 @@ func TestFindWaysNoWay(t *testing.T) {
 }
 
 func TestFindWaysOneWay(t *testing.T) {
-	kitchen := location.NewLocation(
+	kitchen := location.NewBaseLocation(
 		"кухня",
 		"кухня, ничего интересного",
 		"ты находишься на кухне, надо собрать рюкзак и идти в универ",
@@ -35,7 +35,7 @@ func TestFindWaysOneWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	lobby := location.NewLocation(
+	lobby := location.NewBaseLocation(
 		"коридор",
 		"ничего интересного",
 		"ничего интересного",
