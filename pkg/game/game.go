@@ -95,3 +95,19 @@ func (g *Game) LookAround() string {
 	}
 	return curLocMessage + " " + waysMessage
 }
+
+func (g *Game) Walk(destNum int) string {
+	ways := g.findWays()
+	possible := false
+	for _, w := range ways {
+		if destNum == w {
+			possible = true
+		}
+	}
+	if !possible {
+		return fmt.Sprintf("нет пути в %s", g.Locations[destNum].Name())
+	}
+
+	g.playerLocation = destNum
+	return g.Locations[g.playerLocation].Enter() + " " + g.waysMessage()
+}
