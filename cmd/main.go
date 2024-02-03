@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
+	"os"
 	"strings"
 
 	"text_game/pkg/game"
@@ -13,7 +16,22 @@ import (
 var g game.Game
 
 func main() {
+	var input string
+	var err error
+
 	initGame()
+
+	fmt.Println("тебе надо собраться в универ")
+	for {
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		input = scanner.Text()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Println(handleCommand(input))
+	}
 }
 
 func initGame() {
