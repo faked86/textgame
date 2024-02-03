@@ -16,7 +16,7 @@ func TestFindWaysNoWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 
 	got := len(game.findWays())
 	want := 0
@@ -42,7 +42,7 @@ func TestFindWaysOneWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)
 
@@ -68,7 +68,7 @@ func TestWaysMessageNoWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 
 	got := game.waysMessage()
 	want := ""
@@ -94,7 +94,7 @@ func TestWaysMessageOneWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)
 
@@ -131,7 +131,7 @@ func TestWaysMessageMultipleWays(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(lobby, &inventory.Inventory{})
+	game := NewGame(lobby, inventory.Inventory{})
 
 	game.AddLocation(kitchen)
 	game.AddWay(0, 1)
@@ -172,7 +172,7 @@ func TestWaysMessageDifferentTag1(t *testing.T) {
 		inventory.Inventory{},
 		tags.Outside,
 	)
-	game := NewGame(lobby, &inventory.Inventory{})
+	game := NewGame(lobby, inventory.Inventory{})
 
 	game.AddLocation(kitchen)
 	game.AddWay(0, 1)
@@ -205,7 +205,7 @@ func TestWaysMessageDifferentTag2(t *testing.T) {
 		inventory.Inventory{},
 		tags.Outside,
 	)
-	game := NewGame(outside, &inventory.Inventory{})
+	game := NewGame(outside, inventory.Inventory{})
 
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)
@@ -226,7 +226,7 @@ func TestLookAroundNoWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 
 	got := game.LookAround()
 	want := "ты находишься на кухне, надо собрать рюкзак и идти в универ."
@@ -252,7 +252,7 @@ func TestLookAroundOneWay(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(kitchen, &inventory.Inventory{})
+	game := NewGame(kitchen, inventory.Inventory{})
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)
 
@@ -289,7 +289,7 @@ func TestLookAroundMultipleWays(t *testing.T) {
 		inventory.Inventory{},
 		tags.Home,
 	)
-	game := NewGame(lobby, &inventory.Inventory{})
+	game := NewGame(lobby, inventory.Inventory{})
 
 	game.AddLocation(kitchen)
 	game.AddWay(0, 1)
@@ -330,7 +330,7 @@ func TestLookAroundDifferentTag1(t *testing.T) {
 		inventory.Inventory{},
 		tags.Outside,
 	)
-	game := NewGame(lobby, &inventory.Inventory{})
+	game := NewGame(lobby, inventory.Inventory{})
 
 	game.AddLocation(kitchen)
 	game.AddWay(0, 1)
@@ -363,7 +363,7 @@ func TestLookAroundDifferentTag2(t *testing.T) {
 		inventory.Inventory{},
 		tags.Outside,
 	)
-	game := NewGame(outside, &inventory.Inventory{})
+	game := NewGame(outside, inventory.Inventory{})
 
 	game.AddLocation(lobby)
 	game.AddWay(0, 1)

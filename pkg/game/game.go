@@ -12,11 +12,11 @@ import (
 type Game struct {
 	WorldMap        [][]bool
 	Locations       []location.Location
-	playerInventory *inventory.Inventory
+	playerInventory inventory.Inventory
 	playerLocation  int
 }
 
-func NewGame(start location.Location, invent *inventory.Inventory) *Game {
+func NewGame(start location.Location, invent inventory.Inventory) *Game {
 	w := &Game{
 		WorldMap:        [][]bool{{false}},
 		Locations:       []location.Location{start},
@@ -110,4 +110,19 @@ func (g *Game) Walk(destNum int) string {
 
 	g.playerLocation = destNum
 	return g.Locations[g.playerLocation].Enter() + " " + g.waysMessage()
+}
+
+func (g *Game) TakeItem(itemName string) string {
+	item, err := g.Locations[g.playerLocation].TakeItem(itemName)
+	if err != nil {
+		switch err.Error() {
+		case "no such item in this location":
+			return "нет такого"
+		default:
+			panic(err)
+		}
+	}
+
+	g.playerInventory = append(g.playerInventory, item)
+	return "предмет добавлен в инвентарь: " + itemName
 }
