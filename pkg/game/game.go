@@ -96,7 +96,17 @@ func (g *Game) LookAround() string {
 	return curLocMessage + " " + waysMessage
 }
 
-func (g *Game) Walk(destNum int) string {
+func (g *Game) Walk(dest string) string {
+	destNum := -1
+	for i, loc := range g.Locations {
+		if loc.Name() == dest {
+			destNum = i
+		}
+	}
+	if destNum == -1 {
+		return fmt.Sprintf("локация %s не существует", dest)
+	}
+
 	ways := g.findWays()
 	possible := false
 	for _, w := range ways {
