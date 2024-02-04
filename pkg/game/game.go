@@ -49,6 +49,7 @@ func (g *Game) AddWay(l1, l2 int) error {
 	return nil
 }
 
+// Returns slice of location numbers
 func (g *Game) findWays() []int {
 	res := make([]int, 0)
 	for i, way := range g.WorldMap[g.playerLocation] {
@@ -59,6 +60,7 @@ func (g *Game) findWays() []int {
 	return res
 }
 
+// Returns strin with possible ways
 func (g *Game) waysMessage() string {
 	ways := g.findWays()
 
@@ -97,25 +99,30 @@ func (g *Game) LookAround() string {
 }
 
 func (g *Game) Walk(dest string) string {
-	destNum := -1
-	for i, loc := range g.Locations {
-		if loc.Name() == dest {
-			destNum = i
-		}
+	if dest == g.Locations[g.playerLocation].Name() {
+		return fmt.Sprintf("уже в %s", dest)
 	}
-	if destNum == -1 {
-		return fmt.Sprintf("локация %s не существует", dest)
+
+	if dest == string(g.Locations[g.playerLocation].Tag()) {
+		return fmt.Sprintf("уже в %s", dest)
 	}
 
 	ways := g.findWays()
-	possible := false
+
+	destNum := -1
 	for _, w := range ways {
-		if destNum == w {
-			possible = true
+		if dest == g.Locations[w].Name() {
+			destNum = w
+			break
+		}
+		if dest == string(g.Locations[w].Tag()) {
+			destNum = w
+			break
 		}
 	}
-	if !possible {
-		return fmt.Sprintf("нет пути в %s", g.Locations[destNum].Name())
+
+	if destNum == -1 {
+		return fmt.Sprintf("нет пути в %s", dest)
 	}
 
 	g.playerLocation = destNum
